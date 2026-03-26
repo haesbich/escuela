@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Escuela Primaria – Nombre de tu Escuela</title>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Fraunces:ital,wght@0,700;0,900;1,700&display=swap" rel="stylesheet"/>
+  <style>
+    /* ========== VARIABLES – Paleta inspirada en Costa Rica ========== */
+    :root {
+      --primary:   #002b7f;   /* Azul bandera de Costa Rica */
+      --secondary: #fa2d45;   /* Rojo bandera de Costa Rica */
+      --accent:    #00873e;   /* Verde paisajes costarricenses */
+      --light:     #eef2fb;   /* Fondo azul muy claro */
+      --dark:      #001540;   /* Azul oscuro para textos */
+      --white:     #ffffff;
+      --gray:      #f5f7fc;
+      --radius:    16px;
+      --shadow:    0 4px 24px rgba(0,43,127,.13);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Nunito', sans-serif;
+      color: var(--dark);
+      background: var(--white);
+      overflow-x: hidden;
+    }
+
+    /* ========== NAVBAR ========== */
+    nav {
+      position: sticky; top: 0; z-index: 999;
+      background: var(--primary);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 2rem;
+      box-shadow: 0 2px 12px rgba(0,0,0,.2);
+    }
+    .nav-logo {
+      display: flex; align-items: center; gap: .75rem;
+      text-decoration: none;
+      padding: .85rem 0;
+    }
+    .nav-logo .logo-icon {
+      width: 44px; height: 44px;
+      background: var(--secondary);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.5rem;
+    }
+    .nav-logo span {
+      font-family: 'Fraunces', serif;
+      font-size: 1.15rem; font-weight: 900;
+      color: var(--white);
+      line-height: 1.2;
+    }
+    .nav-logo span em { color: var(--secondary); font-style: normal; }
+    .nav-links { display: flex; gap: .25rem; }
+    .nav-links a {
+      color: rgba(255,255,255,.85);
+      text-decoration: none;
+      font-size: .9rem; font-weight: 700;
+      padding: .6rem .9rem;
+      border-radius: 8px;
+      transition: background .2s, color .2s;
+    }
+    .nav-links a:hover { background: rgba(255,255,255,.15); color: #fff; }
+
+    /* ========== HERO ========== */
+    .hero {
+      min-height: 88vh;
+      background:
+        linear-gradient(135deg, rgba(0,43,127,.90) 0%, rgba(0,21,64,.80) 100%),
+        /* Reemplaza esta URL con una foto real de tu escuela */
+        url('https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=1400&q=80') center/cover no-repeat;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      text-align: center;
+      padding: 4rem 2rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 60% 40%, rgba(206,17,38,.18) 0%, transparent 65%);
+    }
+    .hero-badge {
+      background: var(--secondary);
+      color: var(--dark);
+      font-weight: 800; font-size: .8rem;
+      padding: .35rem 1rem;
+      border-radius: 999px;
+      letter-spacing: .08em; text-transform: uppercase;
+      margin-bottom: 1.2rem;
+    }
+    .hero h1 {
+      font-family: 'Fraunces', serif;
+      font-size: clamp(2.4rem, 6vw, 4.2rem);
+      color: var(--white);
+      line-height: 1.1;
+      max-width: 780px;
+      margin-bottom: 1.2rem;
+    }
+    .hero h1 em { color: var(--secondary); font-style: normal; }
+    .hero p {
+      color: rgba(255,255,255,.85);
+      font-size: 1.15rem; max-width: 560px;
+      line-height: 1.7;
+      margin-bottom: 2rem;
+    }
+    .hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; }
+    .btn {
+      display: inline-block;
+      padding: .8rem 2rem;
+      border-radius: 999px;
+      font-weight: 800; font-size: 1rem;
+      text-decoration: none;
+      transition: transform .2s, box-shadow .2s;
+    }
+    .btn:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0,0,0,.2); }
+    .btn-primary { background: var(--secondary); color: var(--dark); }
+    .btn-outline { background: transparent; color: #fff; border: 2px solid rgba(255,255,255,.6); }
+    .btn-outline:hover { border-color: #fff; }
+
+    .hero-stats {
+      display: flex; gap: 2.5rem;
+      margin-top: 3.5rem;
+      flex-wrap: wrap; justify-content: center;
+    }
+    .stat { text-align: center; }
+    .stat strong { display: block; color: var(--secondary); font-size: 2rem; font-family: 'Fraunces',serif; }
+    .stat span { color: rgba(255,255,255,.75); font-size: .85rem; }
+
+    /* ========== SECTION COMMONS ========== */
+    section { padding: 5rem 2rem; }
+    .container { max-width: 1100px; margin: 0 auto; }
+    .section-title {
+      font-family: 'Fraunces', serif;
+      font-size: clamp(1.7rem, 3.5vw, 2.6rem);
+      color: var(--dark);
+      margin-bottom: .5rem;
+    }
+    .section-title em { color: var(--primary); font-style: normal; }
+    .section-sub { color: #4a5f8a; font-size: 1.05rem; margin-bottom: 2.5rem; max-width: 600px; }
+    .tag {
+      display: inline-block;
+      background: var(--light);
+      color: var(--primary);
+      font-weight: 800; font-size: .75rem;
+      letter-spacing: .08em; text-transform: uppercase;
+      padding: .3rem .8rem;
+      border-radius: 999px;
+      margin-bottom: .75rem;
+    }
+
+    /* ========== NOTICIAS ========== */
+    #noticias { background: var(--gray); }
+    .news-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1.5rem;
+    }
+    .news-card {
+      background: var(--white);
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      transition: transform .25s;
+    }
+    .news-card:hover { transform: translateY(-4px); }
+    .news-card-img {
+      height: 185px;
+      background: var(--light);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 3.5rem;
+      /* Reemplaza el background por url('tu-imagen.jpg') center/cover */
+    }
+    .news-card-body { padding: 1.25rem; }
+    .news-date { font-size: .78rem; color: #7a8fb5; font-weight: 700; margin-bottom: .4rem; }
+    .news-card-body h3 { font-size: 1.05rem; font-weight: 800; margin-bottom: .5rem; line-height: 1.35; }
+    .news-card-body p { font-size: .9rem; color: #4a5f8a; line-height: 1.6; }
+    .news-card-body a {
+      display: inline-block; margin-top: .75rem;
+      font-size: .85rem; font-weight: 800;
+      color: var(--primary); text-decoration: none;
+    }
+    .news-card-body a:hover { text-decoration: underline; }
+
+    /* ========== CALENDARIO – Google Calendar embed ========== */
+    #calendario { background: var(--white); }
+    .gcal-wrapper {
+      position: relative;
+      background: var(--white);
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      border: 2px solid var(--light);
+    }
+    .gcal-wrapper iframe {
+      display: block;
+      min-height: 580px;
+    }
+    /* Aviso placeholder – se muestra encima del iframe mientras no esté configurado */
+    .gcal-placeholder {
+      position: absolute; inset: 0;
+      background: var(--light);
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      text-align: center;
+      padding: 2.5rem;
+      gap: .75rem;
+    }
+    .gcal-placeholder .ph-icon { font-size: 3rem; }
+    .gcal-placeholder h4 { font-weight: 800; font-size: 1.1rem; }
+    .gcal-placeholder p { color: #5a7a6a; font-size: .9rem; max-width: 400px; line-height: 1.6; }
+    .btn-cal {
+      background: var(--primary); color: #fff;
+      padding: .7rem 1.5rem; border-radius: 999px;
+      font-weight: 800; font-size: .9rem;
+      text-decoration: none;
+      display: inline-block; margin-top: .5rem;
+    }
+    .cal-tip {
+      background: var(--light);
+      border-radius: 10px;
+      padding: .85rem 1.25rem;
+      font-size: .88rem; color: #2a3f7a;
+      border-left: 4px solid var(--primary);
+      margin-top: 1.25rem;
+    }
+    .cal-legend { margin-top: 1.25rem; }
+
+    /* ========== EXTRACURRICULARES ========== */
+    #extracurriculares { background: var(--gray); }
+    .extra-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 1.25rem;
+    }
+    .extra-card {
+      background: var(--white);
+      border-radius: var(--radius);
+      padding: 1.75rem 1.25rem;
+      text-align: center;
+      box-shadow: var(--shadow);
+      transition: transform .25s;
+    }
+    .extra-card:hover { transform: translateY(-4px); }
+    .extra-icon {
+      font-size: 2.8rem; margin-bottom: .9rem;
+      width: 68px; height: 68px;
+      background: var(--light);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto .9rem;
+    }
+    .extra-card h3 { font-weight: 800; font-size: 1rem; margin-bottom: .4rem; }
+    .extra-card p { font-size: .84rem; color: #4a5f8a; line-height: 1.55; }
+    .extra-card .schedule {
+      display: inline-block; margin-top: .75rem;
+      background: var(--light); color: var(--primary);
+      font-size: .75rem; font-weight: 800;
+      padding: .3rem .7rem; border-radius: 999px;
+    }
+
+    /* ========== FORMULARIO RETROALIMENTACIÓN ========== */
+    #retroalimentacion { background: var(--primary); }
+    #retroalimentacion .section-title { color: var(--white); }
+    #retroalimentacion .section-sub  { color: rgba(255,255,255,.75); }
+    #retroalimentacion .tag { background: rgba(255,255,255,.15); color: #fff; }
+
+    .form-wrapper {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: start;
+    }
+    @media(max-width:720px){ .form-wrapper { grid-template-columns: 1fr; } }
+
+    .form-info h3 {
+      font-family: 'Fraunces', serif;
+      font-size: 1.4rem; color: var(--white);
+      margin-bottom: 1rem;
+    }
+    .form-info ul {
+      list-style: none;
+      display: flex; flex-direction: column; gap: .7rem;
+      margin-bottom: 1.75rem;
+    }
+    .form-info ul li {
+      display: flex; gap: .75rem; align-items: center;
+      color: rgba(255,255,255,.85); font-size: .95rem;
+    }
+    .form-info ul li::before {
+      content: '✓';
+      background: var(--secondary); color: var(--dark);
+      width: 22px; height: 22px;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: .75rem; font-weight: 900;
+      flex-shrink: 0;
+    }
+    .form-steps {
+      background: rgba(255,255,255,.12);
+      border-radius: var(--radius);
+      padding: 1.25rem 1.5rem;
+    }
+    .form-steps h4 {
+      color: var(--secondary); font-weight: 800;
+      font-size: .9rem; text-transform: uppercase;
+      letter-spacing: .06em; margin-bottom: .75rem;
+    }
+    .form-steps ol {
+      padding-left: 1.2rem;
+      display: flex; flex-direction: column; gap: .5rem;
+    }
+    .form-steps ol li {
+      color: rgba(255,255,255,.85); font-size: .88rem; line-height: 1.5;
+    }
+    .form-steps strong { color: #fff; }
+    .form-steps code {
+      background: rgba(255,255,255,.15);
+      padding: .1rem .4rem; border-radius: 4px;
+      font-size: .82rem;
+    }
+
+    /* Google Form embed */
+    .google-form-embed {
+      position: relative;
+      background: var(--white);
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: 0 8px 32px rgba(0,0,0,.25);
+    }
+    .google-form-embed iframe {
+      width: 100%;
+      height: 600px;
+      border: none;
+      display: block;
+    }
+    .form-placeholder {
+      position: absolute; inset: 0;
+      background: #f8fffe;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      text-align: center;
+      padding: 2.5rem 2rem;
+      gap: .6rem;
+    }
+    .form-placeholder .ph-icon { font-size: 3rem; }
+    .form-placeholder h4 { font-weight: 800; font-size: 1.05rem; color: var(--dark); }
+    .form-placeholder p { color: #5a7a6a; font-size: .88rem; line-height: 1.6; max-width: 340px; }
+    .btn-form {
+      background: var(--primary); color: #fff;
+      padding: .7rem 1.5rem; border-radius: 999px;
+      font-weight: 800; font-size: .88rem;
+      text-decoration: none;
+      display: inline-block; margin-top: .5rem;
+    }
+
+    /* ========== FOOTER ========== */
+    footer {
+      background: var(--dark);
+      color: rgba(255,255,255,.7);
+      padding: 3rem 2rem;
+    }
+    .footer-inner {
+      max-width: 1100px; margin: 0 auto;
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      gap: 2.5rem;
+    }
+    @media(max-width:680px){ .footer-inner { grid-template-columns: 1fr; } }
+    footer h4 { color: #fff; font-weight: 800; margin-bottom: .75rem; }
+    footer p, footer a { font-size: .88rem; line-height: 1.7; }
+    footer a { color: rgba(255,255,255,.6); text-decoration: none; display: block; margin-bottom: .25rem; }
+    footer a:hover { color: var(--secondary); }
+    .footer-bottom {
+      max-width: 1100px; margin: 2rem auto 0;
+      padding-top: 1.5rem;
+      border-top: 1px solid rgba(255,255,255,.1);
+      display: flex; justify-content: space-between; align-items: center;
+      flex-wrap: wrap; gap: .5rem;
+      font-size: .82rem;
+    }
+
+    /* ========== RESPONSIVE ========== */
+    @media(max-width:760px){
+      .nav-links { display: none; } /* Para mobile puedes agregar un menú hamburguesa */
+      .hero h1 { font-size: 2rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ===================== NAVBAR ===================== -->
+<nav>
+  <a href="#" class="nav-logo">
+    <div class="logo-icon">🏫</div>
+    <span>Escuela <em>Primaria</em><br>Nombre de tu Escuela</span>
+  </a>
+  <div class="nav-links">
+    <a href="#noticias">Noticias</a>
+    <a href="#calendario">Calendario</a>
+    <a href="#extracurriculares">Actividades</a>
+    <a href="#retroalimentacion">Comentarios</a>
+  </div>
+</nav>
+
+<!-- ===================== HERO ===================== -->
+<!-- PERSONALIZACIÓN: Cambia el background-image por una foto real de tu escuela -->
+<header class="hero">
+  <div class="hero-badge">📚 Ciclo Escolar 2024 – 2025</div>
+  <h1>Formando el <em>futuro</em> con valores y excelencia</h1>
+  <p>Bienvenidos a nuestra comunidad educativa. Aquí encontrarás toda la información del ciclo escolar, actividades y novedades.</p>
+  <div class="hero-btns">
+    <a href="#noticias" class="btn btn-primary">Ver noticias</a>
+    <a href="#retroalimentacion" class="btn btn-outline">Enviar comentario</a>
+  </div>
+  <div class="hero-stats">
+    <div class="stat"><strong>450+</strong><span>Estudiantes</span></div>
+    <div class="stat"><strong>32</strong><span>Docentes</span></div>
+    <div class="stat"><strong>18</strong><span>Años de trayectoria</span></div>
+    <div class="stat"><strong>10</strong><span>Actividades extracurr.</span></div>
+  </div>
+</header>
+
+<!-- ===================== NOTICIAS ===================== -->
+<section id="noticias">
+  <div class="container">
+    <span class="tag">📰 Últimas novedades</span>
+    <h2 class="section-title">Noticias de la <em>escuela</em></h2>
+    <p class="section-sub">Mantente al tanto de todo lo que acontece en nuestra comunidad educativa.</p>
+
+    <div class="news-grid">
+
+      <!-- NOTICIA 1 – Reemplaza el emoji por una imagen real -->
+      <article class="news-card">
+        <div class="news-card-img" style="background: #e8f5e9;">🎉</div>
+        <div class="news-card-body">
+          <p class="news-date">15 de noviembre, 2024</p>
+          <h3>Festival de Fin de Año – ¡Todos invitados!</h3>
+          <p>Este viernes 22 de noviembre celebramos nuestro Festival Anual con presentaciones artísticas de todos los grados.</p>
+          <a href="#">Leer más →</a>
+        </div>
+      </article>
+
+      <!-- NOTICIA 2 -->
+      <article class="news-card">
+        <div class="news-card-img" style="background: #fff8e1;">🏆</div>
+        <div class="news-card-body">
+          <p class="news-date">8 de noviembre, 2024</p>
+          <h3>Nuestros estudiantes ganan olimpiada de matemáticas regional</h3>
+          <p>Felicitamos a los alumnos de 5.º y 6.º grado por su excelente desempeño en la competencia regional.</p>
+          <a href="#">Leer más →</a>
+        </div>
+      </article>
+
+      <!-- NOTICIA 3 -->
+      <article class="news-card">
+        <div class="news-card-img" style="background: #fce4ec;">📖</div>
+        <div class="news-card-body">
+          <p class="news-date">1 de noviembre, 2024</p>
+          <h3>Nueva biblioteca digital disponible para todos los estudiantes</h3>
+          <p>Hemos habilitado acceso gratuito a más de 500 libros digitales a través de nuestra plataforma de lectura.</p>
+          <a href="#">Leer más →</a>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- ===================== CALENDARIO ===================== -->
+<section id="calendario">
+  <div class="container">
+    <span class="tag">📅 Planificación</span>
+    <h2 class="section-title"><em>Calendario</em> institucional</h2>
+    <p class="section-sub">Fechas importantes del ciclo escolar. Cada evento que agregues en Google Calendar aparecerá aquí automáticamente.</p>
+
+    <!--
+    ╔══════════════════════════════════════════════════════════════════╗
+    ║         CÓMO VINCULAR TU GOOGLE CALENDAR – 4 PASOS             ║
+    ╠══════════════════════════════════════════════════════════════════╣
+    ║  1. Ve a calendar.google.com con la cuenta de la escuela.       ║
+    ║  2. En el panel izquierdo, clic en los tres puntos (⋮) junto    ║
+    ║     al nombre de tu calendario → "Configuración y uso           ║
+    ║     compartido".                                                ║
+    ║  3. Baja hasta "Permisos de acceso" y activa:                   ║
+    ║     ✅ "Hacer público este calendario"                          ║
+    ║  4. Baja hasta "Integrar calendario". Verás una sección         ║
+    ║     que dice "Código de inserción". Copia ese <iframe>.         ║
+    ║  5. BUSCA la línea que dice src="https://calendar.google.com/   ║
+    ║     calendar/embed?src=TU_ID..." dentro del iframe de abajo     ║
+    ║     y reemplázala con la URL de TU iframe copiado.              ║
+    ║                                                                  ║
+    ║  💡 Para agregar eventos: abre Google Calendar, clic en         ║
+    ║     la fecha, escribe el nombre y guarda. ¡El sitio se          ║
+    ║     actualiza solo sin tocar el código!                         ║
+    ╚══════════════════════════════════════════════════════════════════╝
+    -->
+
+    <div class="gcal-wrapper">
+      <!-- Google Calendar institucional -->
+      <iframe
+        src="https://calendar.google.com/calendar/embed?src=c72cfb598d3ba246c690ec2cf274c10edee257b3a103281ed3750a52a20aba1e%40group.calendar.google.com&ctz=America%2FCosta_Rica&hl=es&showTitle=0&showNav=1&showPrint=0&showTabs=1&showCalendars=0&mode=MONTH"
+        style="border:0"
+        width="100%"
+        height="600"
+        frameborder="0"
+        scrolling="no"
+        title="Calendario institucional"
+        loading="lazy">
+      </iframe>
+    </div>
+
+    <div class="cal-legend">
+      <p class="cal-tip">💡 <strong>Para agregar un evento:</strong> abre Google Calendar → clic en la fecha → escribe el nombre → guarda. Aparecerá aquí automáticamente.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== EXTRACURRICULARES ===================== -->
+<section id="extracurriculares">
+  <div class="container">
+    <span class="tag">⭐ Más que clases</span>
+    <h2 class="section-title">Actividades <em>extracurriculares</em></h2>
+    <p class="section-sub">Ofrecemos espacios para el desarrollo integral de cada estudiante. ¡Hay algo para todos!</p>
+
+    <div class="extra-grid">
+
+      <div class="extra-card">
+        <div class="extra-icon">⚽</div>
+        <h3>Fútbol</h3>
+        <p>Entrenamiento técnico y trabajo en equipo para niños de 1.° a 6.° grado.</p>
+        <span class="schedule">Mar y Jue · 2:00–3:30 p.m.</span>
+      </div>
+
+      <div class="extra-card">
+        <div class="extra-icon">🎨</div>
+        <h3>Artes Plásticas</h3>
+        <p>Pintura, escultura y manualidades para potenciar la creatividad.</p>
+        <span class="schedule">Lun y Mié · 1:30–3:00 p.m.</span>
+      </div>
+
+      <div class="extra-card">
+        <div class="extra-icon">🎵</div>
+        <h3>Banda Musical</h3>
+        <p>Aprende guitarra, flauta, percusión y teoría musical básica.</p>
+        <span class="schedule">Vie · 1:00–2:30 p.m.</span>
+      </div>
+
+      <div class="extra-card">
+        <div class="extra-icon">💻</div>
+        <h3>Robótica y Programación</h3>
+        <p>Introducción al pensamiento computacional y construcción de robots.</p>
+        <span class="schedule">Jue · 2:00–3:30 p.m.</span>
+      </div>
+
+      <div class="extra-card">
+        <div class="extra-icon">📚</div>
+        <h3>Club de Lectura</h3>
+        <p>Fomentamos el amor por los libros con lecturas grupales y debates.</p>
+        <span class="schedule">Mié · 12:30–1:30 p.m.</span>
+      </div>
+
+      <div class="extra-card">
+        <div class="extra-icon">🌿</div>
+        <h3>Huerto Escolar</h3>
+        <p>Aprende sobre medio ambiente, siembra y alimentación saludable.</p>
+        <span class="schedule">Lun · 2:00–3:00 p.m.</span>
+      </div>
+
+      <div class="extra-card">
+        <div class="extra-icon">💃</div>
+        <h3>Baile y Danza</h3>
+        <p>Danza folklórica, moderna y ritmos latinoamericanos para todos.</p>
+        <span class="schedule">Mar y Vie · 2:00–3:00 p.m.</span>
+      </div>
+
+      <div class="extra-card">
+        <div class="extra-icon">🏊</div>
+        <h3>Natación</h3>
+        <p>Clases de natación en instalaciones externas con instructores certificados.</p>
+        <span class="schedule">Sáb · 8:00–10:00 a.m.</span>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ===================== RETROALIMENTACIÓN ===================== -->
+<section id="retroalimentacion">
+  <div class="container">
+    <span class="tag">💬 Tu voz importa</span>
+    <h2 class="section-title" style="color:#fff;">Comentarios y <em style="color:var(--secondary)">sugerencias</em></h2>
+    <p class="section-sub">Tus opiniones nos ayudan a mejorar. Completa el formulario y nos pondremos en contacto contigo.</p>
+
+    <div class="form-wrapper">
+      <div class="form-info">
+        <h3>¿Por qué tu opinión es valiosa?</h3>
+        <ul>
+          <li>Mejoramos los servicios y la atención educativa</li>
+          <li>Diseñamos mejores actividades para los estudiantes</li>
+          <li>Fortalecemos la comunicación escuela–familia</li>
+          <li>Resolvemos inquietudes de manera oportuna</li>
+          <li>Toda la información es confidencial</li>
+        </ul>
+        <div class="form-steps">
+          <h4>📬 ¿Cómo ver las respuestas?</h4>
+          <ol>
+            <li>Abre <strong>forms.google.com</strong> con la cuenta de la escuela.</li>
+            <li>Selecciona este formulario.</li>
+            <li>Haz clic en la pestaña <strong>"Respuestas"</strong>.</li>
+            <li>Clic en el ícono de hoja de cálculo verde para ver todo en Google Sheets.</li>
+            <li>Para recibir un correo por cada respuesta: tres puntos <strong>(⋮)</strong> → <strong>"Recibir notificaciones"</strong>.</li>
+          </ol>
+        </div>
+      </div>
+
+      <!--
+      ╔══════════════════════════════════════════════════════════════════╗
+      ║         CÓMO VINCULAR TU GOOGLE FORM – 6 PASOS                 ║
+      ╠══════════════════════════════════════════════════════════════════╣
+      ║  1. Ve a forms.google.com y crea tu formulario.                 ║
+      ║  2. Preguntas recomendadas:                                     ║
+      ║     - Nombre del padre/madre (texto corto)                      ║
+      ║     - Grado de su hijo/a (opción múltiple)                      ║
+      ║     - Tipo: Sugerencia / Felicitación / Queja / Consulta        ║
+      ║     - Su comentario (párrafo)                                   ║
+      ║     - ¿Desea que lo contactemos? + correo                       ║
+      ║  3. Clic en "Enviar" (botón arriba a la derecha).               ║
+      ║  4. Elige la pestaña con el ícono "<>".                         ║
+      ║  5. Del código iframe que aparece, copia SOLO la URL dentro     ║
+      ║     de src="..." (empieza con https://docs.google.com/forms...) ║
+      ║  6. Reemplaza la URL del atributo src del iframe de abajo.      ║
+      ║                                                                  ║
+      ║  💡 Las respuestas llegarán a una hoja de Google Sheets.        ║
+      ║     En Forms → ícono de hoja de cálculo para verlas.            ║
+      ║  💡 Para recibir un correo por cada respuesta:                  ║
+      ║     Forms → tres puntos (⋮) → "Recibir notificaciones"          ║
+      ╚══════════════════════════════════════════════════════════════════╝
+      -->
+
+      <div class="google-form-embed">
+        <!-- Google Forms de retroalimentación -->
+        <iframe
+          src="https://docs.google.com/forms/d/e/1FAIpQLSf9Cp170-HuLFRuchCUvq2XrZ1iJism-MXLhMYus6FxNVigQQ/viewform?embedded=true"
+          width="100%"
+          height="600"
+          frameborder="0"
+          marginheight="0"
+          marginwidth="0"
+          title="Formulario de retroalimentación"
+          loading="lazy">
+          Cargando formulario…
+        </iframe>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ===================== FOOTER ===================== -->
+<footer>
+  <div class="footer-inner">
+    <div>
+      <h4>🏫 Escuela Primaria – Tu Nombre</h4>
+      <p>Comprometidos con la formación integral de niñas y niños, fomentando valores, conocimiento y creatividad.</p>
+      <p style="margin-top:.75rem;">📍 Dirección de la escuela, Ciudad, País</p>
+      <p>📞 +000 0000-0000</p>
+      <p>✉️ <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="e4878b8a908587908ba4909181978791818885ca818091">[email&#160;protected]</a></p>
+    </div>
+    <div>
+      <h4>Navegación</h4>
+      <a href="#noticias">Noticias</a>
+      <a href="#calendario">Calendario institucional</a>
+      <a href="#extracurriculares">Actividades extracurriculares</a>
+      <a href="#retroalimentacion">Comentarios y sugerencias</a>
+    </div>
+    <div>
+      <h4>Horario de atención</h4>
+      <p>Lunes a viernes<br>7:00 a.m. – 4:00 p.m.</p>
+      <br>
+      <h4>Redes sociales</h4>
+      <a href="#">📘 Facebook</a>
+      <a href="#">📸 Instagram</a>
+      <a href="#">▶️ YouTube</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2025 Escuela Primaria – Tu Nombre. Todos 
