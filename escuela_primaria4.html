@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Escuela Primaria – Nombre de tu Escuela</title>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Fraunces:ital,wght@0,700;0,900;1,700&display=swap" rel="stylesheet"/>
+  <style>
+    /* ═══════════════════════════════════════════════
+       COLORES – edita solo estas líneas para cambiar
+       la paleta completa del sitio
+       ═══════════════════════════════════════════════ */
+    :root {
+      --primary:   #002b7f;   /* Azul bandera Costa Rica  */
+      --secondary: #ce1126;   /* Rojo bandera Costa Rica  */
+      --accent:    #00873e;   /* Verde paisajes CR        */
+      --light:     #eef2fb;
+      --dark:      #001540;
+      --white:     #ffffff;
+      --gray:      #f5f7fc;
+      --radius:    16px;
+      --shadow:    0 4px 24px rgba(0,43,127,.13);
+    }
+
+    /* ═══════════════════════════════════════════════
+       URL DEL APPS SCRIPT — pega aquí tu URL después
+       de seguir la guía (también está en el JS)
+       ═══════════════════════════════════════════════ */
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Nunito', sans-serif; color: var(--dark); background: var(--white); overflow-x: hidden; }
+
+    /* ── NAVBAR ───────────────────────────────────── */
+    nav {
+      position: sticky; top: 0; z-index: 999;
+      background: var(--primary);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 2rem;
+      box-shadow: 0 2px 12px rgba(0,0,0,.2);
+    }
+    .nav-logo { display: flex; align-items: center; gap: .75rem; text-decoration: none; padding: .85rem 0; }
+    .nav-logo .logo-icon { width: 44px; height: 44px; background: var(--secondary); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.4rem; }
+    .nav-logo span { font-family: 'Fraunces', serif; font-size: 1.1rem; font-weight: 900; color: #fff; line-height: 1.2; }
+    .nav-logo span em { color: var(--secondary); font-style: normal; }
+    .nav-links { display: flex; gap: .2rem; }
+    .nav-links a { color: rgba(255,255,255,.85); text-decoration: none; font-size: .88rem; font-weight: 700; padding: .55rem .85rem; border-radius: 8px; transition: background .2s; }
+    .nav-links a:hover { background: rgba(255,255,255,.18); color: #fff; }
+    @media(max-width:680px){ .nav-links .hide-sm { display: none; } }
+
+    /* ── HERO ─────────────────────────────────────── */
+    .hero {
+      min-height: 88vh;
+      /* Reemplaza la URL con una foto real de tu escuela */
+      background:
+        linear-gradient(135deg, rgba(0,43,127,.90) 0%, rgba(0,21,64,.80) 100%),
+        url('https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=1400&q=80') center/cover no-repeat;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      text-align: center; padding: 4rem 2rem; position: relative; overflow: hidden;
+    }
+    .hero::before { content:''; position:absolute; inset:0; background: radial-gradient(ellipse at 60% 40%, rgba(206,17,38,.18) 0%, transparent 65%); }
+    .hero > * { position: relative; }
+    .hero-badge { background: var(--secondary); color: #fff; font-weight: 800; font-size: .8rem; padding: .35rem 1rem; border-radius: 999px; letter-spacing: .08em; text-transform: uppercase; margin-bottom: 1.2rem; }
+    .hero h1 { font-family: 'Fraunces', serif; font-size: clamp(2.4rem, 6vw, 4.2rem); color: #fff; line-height: 1.1; max-width: 780px; margin-bottom: 1.2rem; }
+    .hero h1 em { color: var(--secondary); font-style: normal; }
+    .hero p { color: rgba(255,255,255,.85); font-size: 1.15rem; max-width: 560px; line-height: 1.7; margin-bottom: 2rem; }
+    .hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; }
+    .btn { display: inline-block; padding: .8rem 2rem; border-radius: 999px; font-weight: 800; font-size: 1rem; text-decoration: none; cursor: pointer; transition: transform .2s, box-shadow .2s; border: none; font-family: 'Nunito', sans-serif; }
+    .btn:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0,0,0,.2); }
+    .btn-primary { background: var(--secondary); color: #fff; }
+    .btn-outline  { background: transparent; color: #fff; border: 2px solid rgba(255,255,255,.6); }
+    .btn-outline:hover { border-color: #fff; }
+    .hero-stats { display: flex; gap: 2.5rem; margin-top: 3.5rem; flex-wrap: wrap; justify-content: center; }
+    .stat strong { display: block; color: var(--secondary); font-size: 2rem; font-family: 'Fraunces', serif; }
+    .stat span { color: rgba(255,255,255,.75); font-size: .85rem; }
+
+    /* ── SECCIONES COMUNES ────────────────────────── */
+    section { padding: 5rem 2rem; }
+    .container { max-width: 1100px; margin: 0 auto; }
+    .section-title { font-family: 'Fraunces', serif; font-size: clamp(1.7rem, 3.5vw, 2.6rem); color: var(--dark); margin-bottom: .5rem; }
+    .section-title em { color: var(--primary); font-style: normal; }
+    .section-sub { color: #4a5f8a; font-size: 1.05rem; margin-bottom: 2.5rem; max-width: 600px; }
+    .tag { display: inline-block; background: var(--light); color: var(--primary); font-weight: 800; font-size: .75rem; letter-spacing: .08em; text-transform: uppercase; padding: .3rem .8rem; border-radius: 999px; margin-bottom: .75rem; }
+
+    /* ── ESTADO DE CARGA ──────────────────────────── */
+    .loading-state {
+      grid-column: 1/-1;
+      display: flex; flex-direction: column; align-items: center;
+      gap: 1rem; padding: 3rem; color: #7a8fb5;
+    }
+    .spinner {
+      width: 36px; height: 36px; border: 3px solid var(--light);
+      border-top-color: var(--primary); border-radius: 50%;
+      animation: spin .7s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .empty-state { grid-column: 1/-1; text-align: center; padding: 3rem; color: #7a8fb5; }
+    .error-state { grid-column: 1/-1; text-align: center; padding: 2rem; color: var(--secondary); background: #fde8e8; border-radius: var(--radius); font-size: .9rem; }
+
+    /* ── NOTICIAS ─────────────────────────────────── */
+    #noticias { background: var(--gray); }
+    .news-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.5rem; }
+    .news-card { background: var(--white); border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow); transition: transform .25s; }
+    .news-card:hover { transform: translateY(-4px); }
+    .news-card-img { height: 185px; display: flex; align-items: center; justify-content: center; font-size: 3.5rem; background: var(--light); overflow: hidden; }
+    .news-card-img img { width: 100%; height: 100%; object-fit: cover; }
+    .news-card-body { padding: 1.25rem; }
+    .news-date { font-size: .78rem; color: #7a8fb5; font-weight: 700; margin-bottom: .4rem; }
+    .news-card-body h3 { font-size: 1.05rem; font-weight: 800; margin-bottom: .5rem; line-height: 1.35; }
+    .news-card-body p { font-size: .9rem; color: #4a5f8a; line-height: 1.6; }
+    .news-tag { display: inline-block; margin-top: .75rem; background: var(--light); color: var(--primary); font-size: .72rem; font-weight: 800; padding: .2rem .6rem; border-radius: 999px; text-transform: uppercase; letter-spacing: .05em; }
+
+    /* ── CALENDARIO ───────────────────────────────── */
+    #calendario { background: var(--white); }
+    .gcal-wrapper { border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow); border: 2px solid var(--light); }
+    .gcal-wrapper iframe { display: block; }
+    .cal-tip { background: var(--light); border-radius: 10px; padding: .85rem 1.25rem; font-size: .88rem; color: #2a3f7a; border-left: 4px solid var(--primary); margin-top: 1.25rem; }
+
+    /* ── EXTRACURRICULARES ────────────────────────── */
+    #extracurriculares { background: var(--gray); }
+    .extra-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 1.25rem; }
+    .extra-card { background: var(--white); border-radius: var(--radius); padding: 1.75rem 1.25rem; text-align: center; box-shadow: var(--shadow); transition: transform .25s; }
+    .extra-card:hover { transform: translateY(-4px); }
+    .extra-icon { font-size: 2.4rem; width: 64px; height: 64px; background: var(--light); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto .9rem; }
+    .extra-card h3 { font-weight: 800; font-size: 1rem; margin-bottom: .4rem; }
+    .extra-card p { font-size: .84rem; color: #4a5f8a; line-height: 1.55; }
+    .extra-card .schedule { display: inline-block; margin-top: .75rem; background: var(--light); color: var(--primary); font-size: .75rem; font-weight: 800; padding: .3rem .7rem; border-radius: 999px; }
+
+    /* ── RETROALIMENTACIÓN ────────────────────────── */
+    #retroalimentacion { background: var(--primary); }
+    #retroalimentacion .section-title { color: #fff; }
+    #retroalimentacion .section-sub   { color: rgba(255,255,255,.75); }
+    #retroalimentacion .tag { background: rgba(255,255,255,.15); color: #fff; }
+    .form-wrapper { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: start; }
+    @media(max-width:720px){ .form-wrapper { grid-template-columns: 1fr; } }
+    .form-info h3 { font-family: 'Fraunces', serif; font-size: 1.4rem; color: #fff; margin-bottom: 1rem; }
+    .form-info ul { list-style: none; display: flex; flex-direction: column; gap: .7rem; margin-bottom: 1.75rem; }
+    .form-info ul li { display: flex; gap: .75rem; align-items: center; color: rgba(255,255,255,.85); font-size: .95rem; }
+    .form-info ul li::before { content: '✓'; background: var(--secondary); color: #fff; width: 22px; height: 22px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: .75rem; font-weight: 900; flex-shrink: 0; }
+    .form-steps { background: rgba(255,255,255,.12); border-radius: var(--radius); padding: 1.25rem 1.5rem; }
+    .form-steps h4 { color: var(--secondary); font-weight: 800; font-size: .9rem; text-transform: uppercase; letter-spacing: .06em; margin-bottom: .75rem; }
+    .form-steps ol { padding-left: 1.2rem; display: flex; flex-direction: column; gap: .5rem; }
+    .form-steps ol li { color: rgba(255,255,255,.85); font-size: .88rem; line-height: 1.5; }
+    .form-steps strong { color: #fff; }
+    .google-form-embed { background: var(--white); border-radius: var(--radius); overflow: hidden; box-shadow: 0 8px 32px rgba(0,0,0,.25); }
+    .google-form-embed iframe { width: 100%; height: 600px; border: none; display: block; }
+
+    /* ── FOOTER ───────────────────────────────────── */
+    footer { background: var(--dark); color: rgba(255,255,255,.7); padding: 3rem 2rem; }
+    .footer-inner { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 2.5rem; }
+    @media(max-width:680px){ .footer-inner { grid-template-columns: 1fr; } }
+    footer h4 { color: #fff; font-weight: 800; margin-bottom: .75rem; }
+    footer p, footer a { font-size: .88rem; line-height: 1.7; }
+    footer a { color: rgba(255,255,255,.6); text-decoration: none; display: block; margin-bottom: .25rem; }
+    footer a:hover { color: var(--secondary); }
+    .footer-bottom { max-width: 1100px; margin: 2rem auto 0; padding-top: 1.5rem; border-top: 1px solid rgba(255,255,255,.1); display: flex; justify-content: space-between; flex-wrap: wrap; gap: .5rem; font-size: .82rem; }
+  </style>
+</head>
+<body>
+
+<!-- ══ NAVBAR ══════════════════════════════════════ -->
+<nav>
+  <a href="#" class="nav-logo">
+    <div class="logo-icon">🏫</div>
+    <span>Escuela <em>Primaria</em><br>Nombre de tu Escuela</span>
+  </a>
+  <div class="nav-links">
+    <a href="#noticias" class="hide-sm">Noticias</a>
+    <a href="#calendario" class="hide-sm">Calendario</a>
+    <a href="#extracurriculares" class="hide-sm">Actividades</a>
+    <a href="#retroalimentacion">Comentarios</a>
+  </div>
+</nav>
+
+<!-- ══ HERO ════════════════════════════════════════ -->
+<header class="hero">
+  <div class="hero-badge">📚 Ciclo Escolar 2025</div>
+  <h1>Formando el <em>futuro</em> con valores y excelencia</h1>
+  <p>Bienvenidos a nuestra comunidad educativa. Aquí encontrarás toda la información del ciclo escolar, actividades y novedades.</p>
+  <div class="hero-btns">
+    <a href="#noticias" class="btn btn-primary">Ver noticias</a>
+    <a href="#retroalimentacion" class="btn btn-outline">Enviar comentario</a>
+  </div>
+  <div class="hero-stats">
+    <div class="stat"><strong>450+</strong><span>Estudiantes</span></div>
+    <div class="stat"><strong>32</strong><span>Docentes</span></div>
+    <div class="stat"><strong>18</strong><span>Años de trayectoria</span></div>
+    <div class="stat"><strong>10</strong><span>Actividades extracurr.</span></div>
+  </div>
+</header>
+
+<!-- ══ NOTICIAS ════════════════════════════════════ -->
+<section id="noticias">
+  <div class="container">
+    <span class="tag">📰 Últimas novedades</span>
+    <h2 class="section-title">Noticias de la <em>escuela</em></h2>
+    <p class="section-sub">Mantente al tanto de todo lo que acontece en nuestra comunidad educativa.</p>
+    <div class="news-grid" id="news-grid">
+      <div class="loading-state">
+        <div class="spinner"></div>
+        <span>Cargando noticias…</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ CALENDARIO ══════════════════════════════════ -->
+<section id="calendario">
+  <div class="container">
+    <span class="tag">📅 Planificación</span>
+    <h2 class="section-title"><em>Calendario</em> institucional</h2>
+    <p class="section-sub">Fechas importantes del ciclo escolar. Agrega eventos en Google Calendar y aparecerán aquí automáticamente.</p>
+    <div class="gcal-wrapper">
+      <iframe
+        src="https://calendar.google.com/calendar/embed?src=c72cfb598d3ba246c690ec2cf274c10edee257b3a103281ed3750a52a20aba1e%40group.calendar.google.com&ctz=America%2FCosta_Rica&hl=es&showTitle=0&showNav=1&showPrint=0&showTabs=1&showCalendars=0&mode=MONTH"
+        style="border:0" width="100%" height="600" frameborder="0" scrolling="no" loading="lazy">
+      </iframe>
+    </div>
+    <p class="cal-tip">💡 <strong>Para agregar un evento:</strong> abre Google Calendar con la cuenta de la escuela → clic en la fecha → escribe el nombre → guarda. Aparece aquí de inmediato.</p>
+  </div>
+</section>
+
+<!-- ══ EXTRACURRICULARES ════════════════════════════ -->
+<section id="extracurriculares">
+  <div class="container">
+    <span class="tag">⭐ Más que clases</span>
+    <h2 class="section-title">Actividades <em>extracurriculares</em></h2>
+    <p class="section-sub">Ofrecemos espacios para el desarrollo integral de cada estudiante. ¡Hay algo para todos!</p>
+    <div class="extra-grid" id="extra-grid">
+      <div class="loading-state">
+        <div class="spinner"></div>
+        <span>Cargando actividades…</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ RETROALIMENTACIÓN ════════════════════════════ -->
+<section id="retroalimentacion">
+  <div class="container">
+    <span class="tag">💬 Tu voz importa</span>
+    <h2 class="section-title" style="color:#fff;">Comentarios y <em style="color:var(--secondary)">sugerencias</em></h2>
+    <p class="section-sub">Tus opiniones nos ayudan a mejorar. Completa el formulario y nos pondremos en contacto contigo.</p>
+    <div class="form-wrapper">
+      <div class="form-info">
+        <h3>¿Por qué tu opinión es valiosa?</h3>
+        <ul>
+          <li>Mejoramos los servicios y la atención educativa</li>
+          <li>Diseñamos mejores actividades para los estudiantes</li>
+          <li>Fortalecemos la comunicación escuela–familia</li>
+          <li>Resolvemos inquietudes de manera oportuna</li>
+          <li>Toda la información es confidencial</li>
+        </ul>
+        <div class="form-steps">
+          <h4>📬 ¿Cómo ver las respuestas?</h4>
+          <ol>
+            <li>Abre <strong>forms.google.com</strong> con la cuenta de la escuela.</li>
+            <li>Selecciona el formulario → pestaña <strong>"Respuestas"</strong>.</li>
+            <li>Clic en el ícono de hoja verde para ver todo en Google Sheets.</li>
+            <li>Para recibir correo por cada respuesta: <strong>⋮ → "Recibir notificaciones"</strong>.</li>
+          </ol>
+        </div>
+      </div>
+      <div class="google-form-embed">
+        <iframe
+          src="https://docs.google.com/forms/d/e/1FAIpQLSf9Cp170-HuLFRuchCUvq2XrZ1iJism-MXLhMYus6FxNVigQQ/viewform?embedded=true"
+          width="100%" height="600" frameborder="0" marginheight="0" marginwidth="0" loading="lazy">
+          Cargando formulario…
+        </iframe>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ FOOTER ══════════════════════════════════════ -->
+<footer>
+  <div class="footer-inner">
+    <div>
+      <h4>🏫 Escuela Primaria – Tu Nombre</h4>
+      <p>Comprometidos con la formación integral de niñas y niños, fomentando valores, conocimiento y creatividad.</p>
+      <p style="margin-top:.75rem">📍 Dirección de la escuela, Costa Rica</p>
+      <p>📞 +506 0000-0000</p>
+      <p>✉️ contacto@tuescuela.ed.cr</p>
+    </div>
+    <div>
+      <h4>Navegación</h4>
+      <a href="#noticias">Noticias</a>
+      <a href="#calendario">Calendario institucional</a>
+      <a href="#extracurriculares">Actividades extracurriculares</a>
+      <a href="#retroalimentacion">Comentarios y sugerencias</a>
+    </div>
+    <div>
+      <h4>Horario de atención</h4>
+      <p>Lunes a viernes<br>7:00 a.m. – 4:00 p.m.</p><br>
+      <h4>Redes sociales</h4>
+      <a href="#">📘 Facebook</a>
+      <a href="#">📸 Instagram</a>
+      <a href="#">▶️ YouTube</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2025 Escuela Primaria – Tu Nombre. Todos los derechos reservados.</span>
+    <span>Hecho con ❤️ para nuestra comunidad</span>
+  </div>
+</footer>
+
+<script>
+  // ═══════════════════════════════════════════════════════
+  //  ⚙️  ÚNICA LÍNEA QUE DEBES EDITAR EN ESTE ARCHIVO
+  //  Pega aquí la URL de tu Google Apps Script Web App
+  //  (la obtienes siguiendo la guía GUIA_GOOGLE_SHEETS.md)
+  // ═══════════════════════════════════════════════════════
+  const SCRIPT_URL = 'PEGA_AQUI_TU_URL_DEL_APPS_SCRIPT';
+
+  // ─── Formatear fecha ────────────────────────────────
+  function fmtFecha(str) {
+    if (!str) return '';
+    const d = new Date(str + 'T12:00:00');
+    return d.toLocaleDateString('es-CR', { day: 'numeric', month: 'long', year: 'numeric' });
+  }
+
+  // ─── Renderizar noticias ────────────────────────────
+  function renderNoticias(lista) {
+    const grid = document.getElementById('news-grid');
+    if (!lista || !lista.length) {
+      grid.innerHTML = '<div class="empty-state">📭 No hay noticias publicadas por el momento.</div>';
+      return;
+    }
+    grid.innerHTML = lista.map(n => `
+      <article class="news-card">
+        <div class="news-card-img" style="background:${n.color || '#eef2fb'}">
+          ${n.imagen
+            ? `<img src="${n.imagen}" alt="${n.titulo}" loading="lazy"/>`
+            : (n.emoji || '📰')}
+        </div>
+        <div class="news-card-body">
+          <p class="news-date">${fmtFecha(n.fecha)}</p>
+          <h3>${n.titulo}</h3>
+          <p>${n.resumen}</p>
+          ${n.categoria ? `<span class="news-tag">${n.categoria}</span>` : ''}
+        </div>
+      </article>`).join('');
+  }
+
+  // ─── Renderizar actividades ─────────────────────────
+  function renderActividades(lista) {
+    const grid = document.getElementById('extra-grid');
+    if (!lista || !lista.length) {
+      grid.innerHTML = '<div class="empty-state">📭 No hay actividades publicadas por el momento.</div>';
+      return;
+    }
+    grid.innerHTML = lista.map(a => `
+      <div class="extra-card">
+        <div class="extra-icon">${a.emoji || '⭐'}</div>
+        <h3>${a.nombre}</h3>
+        <p>${a.descripcion}</p>
+        ${a.horario ? `<span class="schedule">${a.horario}</span>` : ''}
+      </div>`).join('');
+  }
+
+  // ─── Cargar datos desde Google Sheets ──────────────
+  async function cargarDatos() {
+    // Si el script aún no está configurado, mostrar mensaje de guía
+    if (!SCRIPT_URL || SCRIPT_URL === 'PEGA_AQUI_TU_URL_DEL_APPS_SCRIPT') {
+      document.getElementById('news-grid').innerHTML =
+        `<div class="error-state">⚙️ <strong>Configuración pendiente:</strong><br>
+         Sigue la guía <em>GUIA_GOOGLE_SHEETS.md</em> para conectar Google Sheets,<br>
+         luego pega la URL del script en el archivo HTML.</div>`;
+      document.getElementById('extra-grid').innerHTML =
+        `<div class="error-state">⚙️ <strong>Configuración pendiente:</strong><br>
+         Sigue la guía <em>GUIA_GOOGLE_SHEETS.md</em> para conectar Google Sheets.</div>`;
+      return;
+    }
+
+    try {
+      const resp = await fetch(`${SCRIPT_URL}?action=getAll`);
+      if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+      const data = await resp.json();
+      renderNoticias(data.noticias);
+      renderActividades(data.actividades);
+    } catch (err) {
+      console.error('Error cargando datos:', err);
+      document.getElementById('news-grid').innerHTML =
+        `<div class="error-state">⚠️ No se pudieron cargar las noticias. Verifica la URL del script o intenta más tarde.</div>`;
+      document.getElementById('extra-grid').innerHTML =
+        `<div class="error-state">⚠️ No se pudieron cargar las actividades. Verifica la URL del script o intenta más tarde.</div>`;
+    }
+  }
+
+  cargarDatos();
+</script>
+</body>
+</html>
