@@ -7,8 +7,8 @@
   <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet"/>
   <style>
     /* ═══════════════════════════════════════════════
-       COLORES – edita solo estas líneas para cambiar
-       la paleta completa del sitio
+       COLORES – Líneas de código destinadas a cambiar
+    todos los colores de la página (INCOMPLETO)
        ═══════════════════════════════════════════════ */
     :root {
       --primary:   #6f0001;   /* Rojo intenso */
@@ -18,13 +18,14 @@
       --dark:      #1d1d1f;   /* Negro texto */
       --white:     #ffffff;   /* Blanco puro */
       --gray:      #333333;   /* Gris */
+      --lgray:     #6e6e73;   /* Gris claro */
+      --error:     #fde8e8;   /* Rojo error */
       --radius:    16px;
       --shadow:    0 4px 24px rgba(0,43,127,.13);
     }
 
     /* ═══════════════════════════════════════════════
-       URL DEL APPS SCRIPT — pega aquí tu URL después
-       de seguir la guía (también está en el JS)
+       Cuerpo y especificación de fuente
        ═══════════════════════════════════════════════ */
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -41,11 +42,11 @@
     }
     .nav-logo { display: flex; align-items: center; gap: .75rem; text-decoration: none; padding: .85rem 0; }
     .nav-logo .logo-icon { width: 44px; height: 44px; background: var(--secondary); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.4rem; }
-    .nav-logo span { font-family: 'Open Sans', serif; font-size: 1.1rem; font-weight: 900; color: #1d1d1f; line-height: 1.2; }
+    .nav-logo span { font-family: 'Open Sans', serif; font-size: 1.1rem; font-weight: 900; color: var(--dark); line-height: 1.2; }
     .nav-logo span em { color: var(--secondary); font-style: normal; }
     .nav-links { display: flex; gap: .2rem; }
     .nav-links a { color: rgba(29,29,31,.85); text-decoration: none; font-size: .88rem; font-weight: 700; padding: .55rem .85rem; border-radius: 8px; transition: background .2s; }
-    .nav-links a:hover { background: rgba(0,0,0,.18); color: #333333; }
+    .nav-links a:hover { background: rgba(0,0,0,.18); color: var(--gray); }
     @media(max-width:680px){ .nav-links .hide-sm { display: none; } }
 
     /* ── HERO ─────────────────────────────────────── */
@@ -86,7 +87,7 @@
     .loading-state {
       grid-column: 1/-1;
       display: flex; flex-direction: column; align-items: center;
-      gap: 1rem; padding: 3rem; color: #6e6e73;
+      gap: 1rem; padding: 3rem; color: var(--lgray);
     }
     .spinner {
       width: 36px; height: 36px; border: 3px solid var(--light);
@@ -94,8 +95,8 @@
       animation: spin .7s linear infinite;
     }
     @keyframes spin { to { transform: rotate(360deg); } }
-    .empty-state { grid-column: 1/-1; text-align: center; padding: 3rem; color: #6e6e73; }
-    .error-state { grid-column: 1/-1; text-align: center; padding: 2rem; color: var(--secondary); background: #fde8e8; border-radius: var(--radius); font-size: .9rem; }
+    .empty-state { grid-column: 1/-1; text-align: center; padding: 3rem; color: var(--lgray); }
+    .error-state { grid-column: 1/-1; text-align: center; padding: 2rem; color: var(--secondary); background: var(--error); border-radius: var(--radius); font-size: .9rem; }
 
     /* ── NOTICIAS ─────────────────────────────────── */
     #noticias { background: var(--white); }
@@ -105,9 +106,9 @@
     .news-card-img { height: 185px; display: flex; align-items: center; justify-content: center; font-size: 3.5rem; background: var(--light); overflow: hidden; }
     .news-card-img img { width: 100%; height: 100%; object-fit: cover; }
     .news-card-body { padding: 1.25rem; }
-    .news-date { font-size: .78rem; color: #6e6e73; font-weight: 700; margin-bottom: .4rem; }
+    .news-date { font-size: .78rem; color: var(--lgray); font-weight: 700; margin-bottom: .4rem; }
     .news-card-body h3 { font-size: 1.05rem; font-weight: 800; margin-bottom: .5rem; line-height: 1.35; }
-    .news-card-body p { font-size: .9rem; color: #6e6e73; line-height: 1.6; }
+    .news-card-body p { font-size: .9rem; color: var(--lgray); line-height: 1.6; }
     .news-tag { display: inline-block; margin-top: .75rem; background: var(--light); color: var(--dark); font-size: .72rem; font-weight: 800; padding: .2rem .6rem; border-radius: 999px; text-transform: uppercase; letter-spacing: .05em; }
 
     /* ── CALENDARIO ───────────────────────────────── */
@@ -332,7 +333,7 @@
     return dia+' de '+MESES[mes]+' de '+anio;
   }
 
-  // ─── Renderizar noticias ────────────────────────────
+  // ─── Render noticias ────────────────────────────
   function renderNoticias(lista) {
     const grid = document.getElementById('news-grid');
     if (!lista || !lista.length) {
@@ -355,7 +356,7 @@
       </article>`).join('');
   }
 
-  // ─── Renderizar actividades ─────────────────────────
+  // ─── Render actividades ─────────────────────────
   function renderActividades(lista) {
     const grid = document.getElementById('extra-grid');
     if (!lista || !lista.length) {
@@ -370,21 +371,22 @@
         ${a.horario ? `<span class="schedule">${a.horario}</span>` : ''}
       </div>`).join('');
   }
-
+// CÓDIGO DE ERROR //
+ // SE DEBE CONECTAR GOOGLE SHEETS Y PEGAR EL URL DEL SCRIPT //
   // ─── Cargar datos desde Google Sheets ──────────────
   async function cargarDatos() {
     // Si el script aún no está configurado, mostrar mensaje de guía
     if (!SCRIPT_URL || SCRIPT_URL === 'PEGA_AQUI_TU_URL_DEL_APPS_SCRIPT') {
       document.getElementById('news-grid').innerHTML =
         `<div class="error-state">⚙️ <strong>Configuración pendiente:</strong><br>
-         Sigue la guía <em>GUIA_GOOGLE_SHEETS.md</em> para conectar Google Sheets,<br>
-         luego pega la URL del script en el archivo HTML.</div>`;
+         Contacte al soporte para ejecutar <em>GUIA_GOOGLE_SHEETS.md</em> para conectar Google Sheets,<br>
+         y conectar SCRPT_APPS.</div>`;
       document.getElementById('extra-grid').innerHTML =
         `<div class="error-state">⚙️ <strong>Configuración pendiente:</strong><br>
-         Sigue la guía <em>GUIA_GOOGLE_SHEETS.md</em> para conectar Google Sheets.</div>`;
+         Contacte a soporte para ejecutar <em>GUIA_GOOGLE_SHEETS.md</em> para conectar Google Sheets.</div>`;
       return;
     }
-
+/* REVISAR URL DEL SCRIPT PARA SOLUCIONAR ERRORES */
     try {
       const resp = await fetch(`${SCRIPT_URL}?action=getAll`);
       if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
@@ -394,9 +396,9 @@
     } catch (err) {
       console.error('Error cargando datos:', err);
       document.getElementById('news-grid').innerHTML =
-        `<div class="error-state">⚠️ No se pudieron cargar las noticias. Verifica la URL del script o intenta más tarde.</div>`;
+        `<div class="error-state">⚠️ No se pudieron cargar las noticias. Intente más tarde.</div>`;
       document.getElementById('extra-grid').innerHTML =
-        `<div class="error-state">⚠️ No se pudieron cargar las actividades. Verifica la URL del script o intenta más tarde.</div>`;
+        `<div class="error-state">⚠️ No se pudieron cargar las actividades. Intenta más tarde.</div>`;
     }
   }
 
