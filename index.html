@@ -13,11 +13,11 @@
     :root {
       --primary:   #1241ce;   /* Azul */
       --secondary: #97020e;   /* Rojo  */
-      --nav:       #fdfdfe;   /* Blanco off */
-      --light:     #f5f5f7;
-      --dark:      #1d1d1f;
-      --white:     #ffffff;
-      --gray:      #333333;
+      --nav:       #fdfdfe;   /* Blanco off claro */
+      --light:     #f5f5f7;   /* Blanco off oscuro */
+      --dark:      #1d1d1f;   /* Negro texto */
+      --white:     #ffffff;   /* Blanco puro */
+      --gray:      #333333;   /* Gris */
       --radius:    16px;
       --shadow:    0 4px 24px rgba(0,43,127,.13);
     }
@@ -100,7 +100,7 @@
     /* ── NOTICIAS ─────────────────────────────────── */
     #noticias { background: var(--white); }
     .news-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.5rem; }
-    .news-card { background: var(--light); border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow); transition: transform .25s; }
+    .news-card { background: var(--nav); border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow); transition: transform .25s; }
     .news-card:hover { transform: translateY(-4px); }
     .news-card-img { height: 185px; display: flex; align-items: center; justify-content: center; font-size: 3.5rem; background: var(--light); overflow: hidden; }
     .news-card-img img { width: 100%; height: 100%; object-fit: cover; }
@@ -108,7 +108,7 @@
     .news-date { font-size: .78rem; color: #6e6e73; font-weight: 700; margin-bottom: .4rem; }
     .news-card-body h3 { font-size: 1.05rem; font-weight: 800; margin-bottom: .5rem; line-height: 1.35; }
     .news-card-body p { font-size: .9rem; color: #6e6e73; line-height: 1.6; }
-    .news-tag { display: inline-block; margin-top: .75rem; background: var(--nav); color: var(--primary); font-size: .72rem; font-weight: 800; padding: .2rem .6rem; border-radius: 999px; text-transform: uppercase; letter-spacing: .05em; }
+    .news-tag { display: inline-block; margin-top: .75rem; background: var(--light); color: var(--primary); font-size: .72rem; font-weight: 800; padding: .2rem .6rem; border-radius: 999px; text-transform: uppercase; letter-spacing: .05em; }
 
     /* ── CALENDARIO ───────────────────────────────── */
     #calendario { background: var(--white); }
@@ -130,7 +130,7 @@
     #retroalimentacion { background: var(--light); }
     #retroalimentacion .section-title { color: var(--secondary); }
     #retroalimentacion .section-sub   { color: var(--dark); }
-    #retroalimentacion .tag { background: var(--nav); color: var(--dark); }
+    #retroalimentacion .tag { background: var(--gray); color: var(--white); }
     .form-wrapper { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: start; }
     @media(max-width:720px){ .form-wrapper { grid-template-columns: 1fr; } }
     .form-info h3 { font-family: 'Open Sans', serif; font-size: 1.4rem; color: var(--dark); margin-bottom: 1rem; }
@@ -239,7 +239,7 @@
 <section id="retroalimentacion">
   <div class="container">
     <span class="tag">💬 Tu voz importa</span>
-    <h2 class="section-title" style="color:#fff;">Comentarios y <em style="color:var(--secondary)">sugerencias</em></h2>
+    <h2 class="section-title" style="color: var(--dark);">Comentarios y <em style="color:var(--secondary)">sugerencias</em></h2>
     <p class="section-sub">Tus opiniones nos ayudan a mejorar. Completa el formulario para hacernos llegar tus opiniones o consultas.</p>
     <div class="form-wrapper">
       <div class="form-info">
